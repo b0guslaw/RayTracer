@@ -3,6 +3,9 @@
 
 #include "pugixml.hpp"
 
+#include "Background.h"
+#include "Camera.h"
+
 int main(int argc, char** argv) {
     pugi::xml_document doc;
     if(!doc.load_file("../res/example1.xml")){
