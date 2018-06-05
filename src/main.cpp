@@ -2,12 +2,18 @@
 #include <string>
 
 #include "pugixml.hpp"
-#include "../lib/glm/glm.hpp"
 
 #include "Background.h"
 #include "Camera.h"
+#include "XMLParser.h"
 
 int main(int argc, char** argv) {
+    XMLParser parser("../res/example1.xml");
+    Background background(parser.Parse_Background());
+
+    background.print_Values();
+
+    /*
     pugi::xml_document doc;
     if(!doc.load_file("../res/example1.xml")){
         std::cout << "Error reading xml\n\n";
@@ -15,25 +21,27 @@ int main(int argc, char** argv) {
     }
 
     pugi::xml_node scene = doc.child("scene");
-    std::cout << scene.name() << "\n";
+    std::cout << scene.name() << "\n\n";
 
-    for(pugi::xml_node item = scene.first_child(); item; item = item.next_sibling()) {
-        std::cout << item.name() << "\n";
+    pugi::xml_node camera = scene.child("camera");
 
-        for(pugi::xml_node child = item.first_child(); child; child = child.next_sibling()) {
-            for(pugi::xml_attribute attr = child.first_attribute(); attr; attr = attr.next_attribute()) {
-                std::cout << "   " << child.name();
-                std::cout << " " << attr.name() << "=" << attr.value() << "\n";
-                std::string attrName = attr.name();
-            }
+    for(pugi::xml_node node : scene.children()){
+        std::cout << node.name() << "\n";
+        for(pugi::xml_attribute attr = node.first_attribute(); attr; attr = attr.next_attribute()) {
+            std::cout << " " << attr.name() << "=" << attr.value() << "\n";
         }
 
-        for(pugi::xml_attribute attr = item.first_attribute(); attr; attr = attr.next_attribute()) {
-            std::cout << "  " << attr.name() << "=" << attr.value() << "\n";
-
-            std::string attrName = attr.name();
+        for(pugi::xml_attribute attr = node.first_child().first_attribute(); attr; attr = attr.next_attribute()) {
+            std::cout << " " << attr.name() << "=" << attr.value() << "\n";
         }
 
-    }
+        std::cout << node.first_child().name() << "\n";
+        for(pugi::xml_attribute attr = node.first_child().first_child().first_attribute(); attr; attr = attr.next_attribute()) {
+            std::cout << " " << attr.name() << "=" << attr.value() << "\n";
+        }
+
+      }
+       */
+
     return 0;
 }
