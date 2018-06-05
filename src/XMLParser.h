@@ -12,7 +12,6 @@
 class XMLParser {
 private:
     pugi::xml_document doc;
-
     pugi::xml_node scene;
     pugi::xml_node background;
     pugi::xml_node camera;
