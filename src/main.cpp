@@ -10,8 +10,9 @@
 int main(int argc, char** argv) {
     XMLParser parser("../res/example1.xml");
     Background background(parser.Parse_Background());
+    Camera camera(parser.Parse_Camera());
 
-    background.print_Values();
+    parser.Parse_Light();
 
     /*
     pugi::xml_document doc;

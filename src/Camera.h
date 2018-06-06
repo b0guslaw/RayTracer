@@ -16,6 +16,7 @@ public:
 
     Camera(double x, double y, double z,
            double lookat_x,double lookat_y, double lookat_z,
+           double up_x, double up_y, double up_z,
            int fov,
            int res_horizontal, int res_vertical,
            int max_bounces);
