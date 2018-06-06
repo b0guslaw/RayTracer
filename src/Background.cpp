@@ -1,3 +1,4 @@
 #include "Background.h"
 
-Background::Background(RGB _color) : color{_color} {}
+
+Background::Background(RGB_Space _color) : color{_color} {}
