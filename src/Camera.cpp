@@ -10,4 +10,6 @@ Camera::Camera(double x, double y, double z, double lookat_x, double lookat_y, d
                 lookat_x{lookat_x}, lookat_y{lookat_y}, lookat_z{lookat_z},
                 up_x{up_x}, up_y{up_y}, up_z{upz},
                 fov{fov}, res_horizontal{res_horizontal}, res_vertical{res_vertical},
-                max_bounces{max_bounces} {}
+                max_bounces{max_bounces} {
+    position = glm::vec3(x,y,z);
+}

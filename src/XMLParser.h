@@ -38,6 +38,10 @@ public:
             surfaces = scene.child("surfaces");
     }
 
+    std::string Parse_OutputFile(){
+        return scene.attribute("output_file").value();
+    }
+
     Background Parse_Background() {
             RGB_Space rgb(background.attribute("r").as_double(),
                     background.attribute("g").as_double(),
