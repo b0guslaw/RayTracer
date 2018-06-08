@@ -9,7 +9,7 @@
 #include "Camera.h"
 #include "XMLParser.h"
 
-void write_ppm(std::string title);
+void write_ppm(std::string title, int width, int height);
 void read_ppm(std::string title); //For debugging purposes
 
 int main(int argc, char** argv) {
@@ -22,16 +22,20 @@ int main(int argc, char** argv) {
     Light light(parser.Parse_Light());
     std::vector<Sphere> sphere_list = parser.Parse_Surface();
 
-    write_ppm(title);
+    for(int j = 0; j < camera.res_vertical; j++) {
+        for(int i = 0; i < camera.res_horizontal; i++) {
+
+        }
+    }
+
+
+    write_ppm(title, camera.res_vertical, camera.res_horizontal);
     return 0;
 }
 
-void write_ppm(std::string title){
+void write_ppm(std::string title, int width, int height){
     std::ofstream out;
     out.open(title);
-
-    int width = 600;
-    int height = 300;
 
     out << "P3\n";
     out << width << " " << height << "\n255\n";

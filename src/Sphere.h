@@ -3,7 +3,9 @@
 
 #include <string>
 #include "RGB_Space.h"
+#include "../lib/glm/vec3.hpp"
 #include "../lib/glm/vec4.hpp"
+#include "Ray.h"
 
 class Sphere {
 private:
@@ -19,6 +21,9 @@ private:
 
 public:
     Sphere(double radius, double x, double y, double z, RGB_Space rgb,double ka, double kd, double exponent, double reflectance, double transmittance, double refraction, std::string material);
+
+    glm::vec3 center;
+
     void setRadius(double radius);
     void setX(double x);
     void setY(double y);
@@ -34,6 +39,7 @@ public:
     void setIof(double iof);
     void setMaterial(const std::string &material);
 
+    bool intersect(const Ray &ray);
 };
 
 

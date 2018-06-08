@@ -6,7 +6,7 @@
 
 struct Ray {
     glm::vec3 origin;
-    glm::vec4 direction;
+    glm::vec3 direction;
 };
 
 #endif //RAYTRACER_RAY_H

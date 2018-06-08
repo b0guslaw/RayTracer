@@ -3,12 +3,16 @@
 //
 
 #include "Sphere.h"
+#include "Ray.h"
+#include "../lib/glm/geometric.hpp"
 
 Sphere::Sphere(double radius, double x, double y, double z, RGB_Space rgb, double ka, double ks, double exponent,
                double reflectance, double transmittance, double refraction, std::string material) :
                 radius{radius}, x{x}, y{y}, z{z}, rgb{rgb},
                 ka{ka}, kd{kd}, exponent{exponent},
-                reflectance{reflectance}, transmittance{transmittance}, refraction{refraction}, material{material}{}
+                reflectance{reflectance}, transmittance{transmittance}, refraction{refraction}, material{material}{
+    center = glm::vec3(x,y,z);
+}
 
 
 void Sphere::setRadius(double radius) {
@@ -67,3 +71,7 @@ void Sphere::setMaterial(const std::string &material) {
     Sphere::material = material;
 }
 
+bool Sphere::intersect(const Ray& ray) {
+    glm::vec3 l = center - ray.origin;
+
+}
