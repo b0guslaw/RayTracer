@@ -1,11 +1,6 @@
 #ifndef RAYTRACER_CAMERA_H
 #define RAYTRACER_CAMERA_H
 
-#include "../lib/glm/vec3.hpp"
-#include "../lib/glm/geometric.hpp"
-#include "../lib/glm/detail/type_mat.hpp"*
-#include "../lib/glm/detail/type_mat4x4.hpp"
-
 class Camera {
 private:
     double x, y, z; //position of camera
@@ -23,10 +18,6 @@ public:
            int max_bounces);
 
     int res_horizontal, res_vertical;
-    glm::vec3 position;
-    glm::vec3 lookat;
-    glm::vec3 up;
-    glm::mat4 camera_matrix;
 };
 
 

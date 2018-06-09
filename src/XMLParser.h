@@ -90,33 +90,40 @@ public:
     std::vector<Sphere> Parse_Surface() {
         std::vector<Sphere> surface_list;
         for(pugi::xml_node child = surfaces; child; child = child.next_sibling()) {
-            double radius = child.first_child().attribute("radius").as_double();
-            double x, y, z;
+            float radius = child.first_child().attribute("radius").as_float();
+            float x, y, z;
             std::string material;
-            double ka, kd, exponent, r, t, iof;
+            double ka, kd, exponent;
+            float r, t, iof;
 
             pugi::xml_node subchild = child.first_child().first_child();
-            x = subchild.attribute("x").as_double();
-            y = subchild.attribute("y").as_double();
-            z = subchild.attribute("z").as_double();
+            x = subchild.attribute("x").as_float();
+
+            std::cout << "=============================\n";
+            std::cout << "x double= " << subchild.attribute("x").as_double() << "\n";
+            std::cout << "x float= " << subchild.attribute("x").as_float() << "\n";
+            std::cout << "=============================\n";
+
+            y = subchild.attribute("y").as_float();
+            z = subchild.attribute("z").as_float();
             subchild = subchild.next_sibling();
             material = subchild.name();
             subchild = subchild.first_child();
             RGB_Space rgb(
-                    subchild.attribute("r").as_double(),
-                    subchild.attribute("g").as_double(),
-                    subchild.attribute("b").as_double()
+                    subchild.attribute("r").as_float(),
+                    subchild.attribute("g").as_float(),
+                    subchild.attribute("b").as_float()
                     );
             subchild = subchild.next_sibling();
             ka = subchild.attribute("ka").as_double();
             kd = subchild.attribute("kd").as_double();
             exponent = subchild.attribute("exponent").as_double();
             subchild = subchild.next_sibling();
-            r = subchild.attribute("reflectance").as_double();
+            r = subchild.attribute("reflectance").as_float();
             subchild = subchild.next_sibling();
-            t = subchild.attribute("transmittance").as_double();
+            t = subchild.attribute("transmittance").as_float();
             subchild = subchild.next_sibling();
-            iof = subchild.attribute("refraction").as_double();
+            iof = subchild.attribute("refraction").as_float();
 
             Sphere sphere(radius, x, y, z, rgb, ka, kd, exponent, r, t, iof, material);
             surface_list.push_back(sphere);

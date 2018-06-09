@@ -2,12 +2,12 @@
 #define RAYTRACER_RGB_H
 
 struct RGB_Space {
-    double r;
-    double g;
-    double b;
+    float r;
+    float g;
+    float b;
 
     RGB_Space();
-    RGB_Space(double r, double b, double g) : r{r}, g{g}, b{b} {
+    RGB_Space(float r, float b, float g) : r{r}, g{g}, b{b} {
 
     }
 };

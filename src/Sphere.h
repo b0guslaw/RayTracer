@@ -2,44 +2,24 @@
 #define RAYTRACER_SPHERE_H
 
 #include <string>
+
 #include "RGB_Space.h"
-#include "../lib/glm/vec3.hpp"
-#include "../lib/glm/vec4.hpp"
 #include "Ray.h"
+#include "Vec3.h"
 
 class Sphere {
 private:
-    double radius;
-    double x, y , z;
+    float radius;
+    Vec3<float> center;
     RGB_Space rgb;
     double ka, kd, ks, exponent;
-    double reflectance;
-    double refraction;
-    double transmittance;
-    double iof;
+    float reflectance;
+    float refraction;
+    float transmittance;
     std::string material;
 
 public:
-    Sphere(double radius, double x, double y, double z, RGB_Space rgb,double ka, double kd, double exponent, double reflectance, double transmittance, double refraction, std::string material);
-
-    glm::vec3 center;
-
-    void setRadius(double radius);
-    void setX(double x);
-    void setY(double y);
-    void setZ(double z);
-    void setRgb(const RGB_Space &rgb);
-    void setKa(double ka);
-    void setKd(double kd);
-    void setKs(double ks);
-    void setExponent(double exponent);
-    void setReflectance(double reflectance);
-    void setRefraction(double refraction);
-    void setTransmittance(double transmittance);
-    void setIof(double iof);
-    void setMaterial(const std::string &material);
-
-    bool intersect(const Ray &ray);
+    Sphere(float radius, float x, float y, float z, RGB_Space rgb, double ka, double kd, double exponent, float reflectance, float transmittance, float refraction, std::string material);
 };
 
 
