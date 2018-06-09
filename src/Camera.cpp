@@ -1,5 +1,7 @@
 #include "Camera.h"
 
+Camera::Camera() {}
+
 Camera::Camera(Vec3f position, Vec3f lookAt, Vec3f up,
                int fov, int res_horizontal, int res_vertical, int n)  :
                 position{position}, lookAt{lookAt} , up{up}, fov{fov},
@@ -25,3 +27,7 @@ Ray Camera::constructRay(const int &u,const int &v) {
     ray.direction = Vec3f(x,y,z);
     return ray;
 }
+
+
+
+

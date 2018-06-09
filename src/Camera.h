@@ -25,13 +25,14 @@ public:
     Vec3f X_Viewing, Y_Viewing, Z_Viewing;
     float width, height;
     Ray constructRay(const int &u, const int &v);
-    Camera() = delete;
+    Camera();
     Camera(Vec3f position,
            Vec3f lookAt,
            Vec3f up,
            int fov,
            int res_horizontal, int res_vertical,
            int n);
+
 };
 
 

@@ -1,14 +1,13 @@
 #ifndef RAYTRACER_BACKGROUND_H
 #define RAYTRACER_BACKGROUND_H
 
-#include <iostream>
 #include "Color.h"
 
 struct Background {
-private:
     Color color;
-public:
-    Background(Color _color) : color{_color} {};
+    Background() { color = Vec3f(0); }
+    Background(Color color) : color{color} {}
+    Background(const Background& c) : color{c.color} {}
 };
 
 

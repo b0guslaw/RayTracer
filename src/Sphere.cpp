@@ -43,3 +43,8 @@ double Sphere::Intersect(Ray ray) {
     }
     return -1;
 }
+
+Color Sphere::getColor() {
+    return rgb;
+}
+

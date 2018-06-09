@@ -25,6 +25,7 @@ private:
 public:
     Sphere(float radius, Vec3f center, Color rgb, double ka, double kd, double exponent, float reflectance, float transmittance, float refraction, std::string material);
     double Intersect(Ray ray);
+    Color getColor();
 };
 
 
