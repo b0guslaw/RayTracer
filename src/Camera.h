@@ -2,6 +2,7 @@
 #define RAYTRACER_CAMERA_H
 
 #include <vector>
+#include <iostream>
 
 #include "Vec3.h"
 #include "Ray.h"
@@ -16,10 +17,10 @@ private:
     int fov;
     int n; //max bounces
 
-    float widthHalf = width / 2;
-    float heightHalf = height / 2;
-    float wRes_x = width / res_horizontal;
-    float hRes_y = height/ res_vertical;
+    float widthHalf;
+    float heightHalf;
+    float wRes_x;
+    float hRes_y;
 public:
     int res_horizontal, res_vertical;
     Vec3f X_Viewing, Y_Viewing, Z_Viewing;

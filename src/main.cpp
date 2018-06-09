@@ -2,7 +2,6 @@
 #include <string>
 #include <fstream>
 
-
 #include "pugixml.hpp"      //library imports
 #include "../lib/glm/glm.hpp"
 
@@ -10,7 +9,7 @@
 #include "Camera.h"
 #include "XMLParser.h"
 
-Color trace(Ray ray, std::vector<Sphere>&);
+Color trace(Ray ray, std::vector<Sphere>&, bool&);
 void write_ppm(std::string, int, int);
 void read_ppm(std::string); //For debugging purposes
 
@@ -30,13 +29,11 @@ int main(int argc, char** argv) {
     light = parser.Parse_Light();
     std::vector<Sphere> sphere_list = parser.Parse_Surface();
 
-    std::cout << background.color.rgb << std::endl;
-
     for(int j = 0; j < camera.res_vertical; j++) {
         for(int i = 0; i < camera.res_horizontal; i++) {
             Ray ray = camera.constructRay(i,j);
-            Color color = trace(ray, sphere_list);
-
+            bool intersection;
+            Color color = trace(ray, sphere_list, intersection);
             image.push_back(color);
         }
     }
@@ -46,19 +43,22 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-Color trace(Ray ray, std::vector<Sphere> &objectList){
-    bool intersection = false;
+Color trace(Ray ray, std::vector<Sphere> &objectList, bool &intersection){
+    intersection = false;
     double minDepth = -1.0;
     int obj = -1;
 
-    for(auto object : objectList) {
-        double depth = object.Intersect(ray);
-        if(depth == -1){
-            return background.color;
-        } else {
-            return object.getColor();
-        }
+    for(int currentObject = 0; currentObject < objectList.size(); currentObject++) {
+        double depth = objectList[currentObject].Intersect(ray);
+        obj  = ((minDepth  < 0. || depth < minDepth) && depth > 0.) ? currentObject : obj;
+        minDepth = ((minDepth  < 0. || depth < minDepth) && depth > 0.) ? depth : minDepth;
+        intersection  = minDepth  > 0.;
+
     }
+
+    //std::cout << minDepth << '\n';
+
+    return intersection ? objectList[obj].getColor() : background.color;
 }
 
 void write_ppm(std::string title, int width, int height){
@@ -75,7 +75,11 @@ void write_ppm(std::string title, int width, int height){
             out << "\n";
         }
              //r         //g         //b
-        out << 0 << " " << 0 << " " << 0 <<" ";
+        int r = (image[j].rgb.getX() >= 1.0 ? 255 : (image[j].rgb.getX() <= 0.0 ? 0 : (int)floor(image[j].rgb.getX() * 256.0)));
+        int g = (image[j].rgb.getY() >= 1.0 ? 255 : (image[j].rgb.getY() <= 0.0 ? 0 : (int)floor(image[j].rgb.getY() * 256.0)));
+        int b = (image[j].rgb.getZ() >= 1.0 ? 255 : (image[j].rgb.getZ() <= 0.0 ? 0 : (int)floor(image[j].rgb.getZ() * 256.0)));
+
+        out << r << " " << g << " " << b <<" ";
 
     }
 

@@ -20,15 +20,15 @@ Sphere::Sphere(float radius, Vec3f center,
         transmittance{transmittance},
         refraction{refraction},
         material{material} {
-    std::cout << "rgb = " << rgb.rgb << "\n";
 }
 
 double Sphere::Intersect(Ray ray) {
     Vec3f Sphere_Ray_Vector = center - ray.origin;
     double B = Sphere_Ray_Vector.dot(ray.direction);
+
     //Discriminant of quadratic solution
     double Det = B * B - Sphere_Ray_Vector.dot(Sphere_Ray_Vector) + (radius * radius);
-
+   // std::cout << B * B - Sphere_Ray_Vector.dot(Sphere_Ray_Vector) + (radius * radius) << std::endl;
     if(Det < .0) {
         return -1; //No point will be hit
     } else {
@@ -37,8 +37,10 @@ double Sphere::Intersect(Ray ray) {
 
     //Solving quadratic solution
     if(B - Det > epsilon){
+        //std::cout << "intersection\n";
         return B - Det;
     } else if (B + Det > epsilon) {
+        //std::cout << "intersection\n";
         return B + Det;
     }
     return -1;

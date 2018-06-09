@@ -9,6 +9,7 @@ template<typename T>
 class Vec3 {
 private:
     T x, y, z;
+
 public:
     Vec3() : x{T(0)}, y{T(0)}, z{T(0)} {} //no parameter constructor
     Vec3(T t) : x{t}, y{t}, z{t} {}       //single parameter constructor
@@ -73,7 +74,7 @@ public:
         return glm::vec3( v.x, v.y, v.z);
     }
 
-    friend std::ostream & operator << (std::ostream &os, const Vec3<T> &v)
+    friend std::ostream &operator<<(std::ostream &os, const Vec3<T> &v)
     {
         os << "[" << v.x << " " << v.y << " " << v.z << "]";
         return os;
@@ -81,14 +82,21 @@ public:
 
     Vec3<T> Unit() {
         T u = len();
-        if (u > 0) {
-            T inv_u = 1 / sqrt(u);
-            x *= inv_u;
-            y *= inv_u;
-            z *= inv_u;
-        }
-        return *this;
+        return  {x/u, y/u, z/u};
     }
+
+    T getX() const {
+        return x;
+    }
+
+    T getY() const {
+        return y;
+    }
+
+    T getZ() const {
+        return z;
+    }
+
 
 };
 
