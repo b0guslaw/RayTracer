@@ -23,6 +23,8 @@ int main(int argc, char** argv) {
     Light light(parser.Parse_Light());
     std::vector<Sphere> sphere_list = parser.Parse_Surface();
 
+    std::cout << "There are " << sphere_list.size() << " spheres in that list\n";
+
     for(int j = 0; j < camera.res_vertical; j++) {
         for(int i = 0; i < camera.res_horizontal; i++) {
 

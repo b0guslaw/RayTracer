@@ -7,10 +7,11 @@
 #include "Ray.h"
 #include "../lib/glm/geometric.hpp"
 
-Sphere::Sphere(float radius, float x, float y, float z,
+Sphere::Sphere(float radius, Vec3f center,
                RGB_Space rgb, double ka, double kd, double exponent,
                float reflectance, float transmittance, float refraction, std::string material) :
         radius{radius},
+        center{center},
         rgb{rgb},
         ka{ka},
         kd{kd},
@@ -19,9 +20,25 @@ Sphere::Sphere(float radius, float x, float y, float z,
         transmittance{transmittance},
         refraction{refraction},
         material{material} {
+    std::cout << "Sphere coordinates: " << center << std::endl;
+}
 
-    Vec3<float> temp(x, y, z);
-    center = temp;
+double Sphere::Intersect(Ray ray) {
+    Vec3f Sphere_Ray_Vector = center - ray.origin;
+    double B = Sphere_Ray_Vector.dot(ray.direction);
+    //Discriminant of quadratic solution
+    double Det = B * B - Sphere_Ray_Vector.dot(Sphere_Ray_Vector) + (radius * radius);
 
-    std::cout << temp << std::endl;
+    if(Det < .0) {
+        return -1; //No point will be hit
+    } else {
+        Det = sqrt(Det);
+    }
+
+    if(B - Det > epsilon){
+        return B - Det;
+    } else if (B + Det > epsilon) {
+        B + Det;
+    }
+    return -1;
 }

@@ -7,10 +7,12 @@
 #include "Ray.h"
 #include "Vec3.h"
 
+typedef Vec3<float> Vec3f;
+
 class Sphere {
 private:
+    Vec3f center;
     float radius;
-    Vec3<float> center;
     RGB_Space rgb;
     double ka, kd, ks, exponent;
     float reflectance;
@@ -18,8 +20,11 @@ private:
     float transmittance;
     std::string material;
 
+    const epsilon = 0.1; //intersection threshold
+
 public:
-    Sphere(float radius, float x, float y, float z, RGB_Space rgb, double ka, double kd, double exponent, float reflectance, float transmittance, float refraction, std::string material);
+    Sphere(float radius, Vec3f center, RGB_Space rgb, double ka, double kd, double exponent, float reflectance, float transmittance, float refraction, std::string material);
+    double Intersect(Ray ray);
 };
 
 

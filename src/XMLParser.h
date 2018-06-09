@@ -12,6 +12,9 @@
 #include "RGB_Space.h"
 #include "Sphere.h"
 #include "Light.h"
+#include "Vec3.h"
+
+typedef Vec3<float> Vec3f;
 
 class XMLParser {
 private:
@@ -89,23 +92,19 @@ public:
 
     std::vector<Sphere> Parse_Surface() {
         std::vector<Sphere> surface_list;
-        for(pugi::xml_node child = surfaces; child; child = child.next_sibling()) {
-            float radius = child.first_child().attribute("radius").as_float();
+
+        for(pugi::xml_node child = surfaces.first_child(); child; child = child.next_sibling()) {
+            float radius = child.attribute("radius").as_float();
             float x, y, z;
             std::string material;
             double ka, kd, exponent;
             float r, t, iof;
 
-            pugi::xml_node subchild = child.first_child().first_child();
+            pugi::xml_node subchild = child.first_child();
             x = subchild.attribute("x").as_float();
-
-            std::cout << "=============================\n";
-            std::cout << "x double= " << subchild.attribute("x").as_double() << "\n";
-            std::cout << "x float= " << subchild.attribute("x").as_float() << "\n";
-            std::cout << "=============================\n";
-
             y = subchild.attribute("y").as_float();
             z = subchild.attribute("z").as_float();
+
             subchild = subchild.next_sibling();
             material = subchild.name();
             subchild = subchild.first_child();
@@ -125,7 +124,9 @@ public:
             subchild = subchild.next_sibling();
             iof = subchild.attribute("refraction").as_float();
 
-            Sphere sphere(radius, x, y, z, rgb, ka, kd, exponent, r, t, iof, material);
+
+
+            Sphere sphere(radius, Vec3f(x,y,z), rgb, ka, kd, exponent, r, t, iof, material);
             surface_list.push_back(sphere);
         }
 
