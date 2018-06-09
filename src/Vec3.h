@@ -2,6 +2,7 @@
 #define RAYTRACER_VEC3_H
 
 #include <cmath>
+#include <ostream>
 #include "../lib/glm/vec3.hpp"
 
 template<typename T>
@@ -59,6 +60,14 @@ public:
         return (x * v.x + y * v.y + z * v.z);
     }
 
+    Vec3<T> cross(const Vec3<T> &v) const {
+        return (
+                y * v.z - z * v.y,
+                z * v.x - x * v.z,
+                x * v.y - y * v.x
+                );
+    }
+
     //May need this for Lab4b
     glm::vec3 Vec3_To_glm(const Vec3<T> &v) {
         return glm::vec3( v.x, v.y, v.z);
@@ -69,6 +78,18 @@ public:
         os << "[" << v.x << " " << v.y << " " << v.z << "]";
         return os;
     }
+
+    Vec3<T> Unit() {
+        T u = len();
+        if (u > 0) {
+            T inv_u = 1 / sqrt(u);
+            x *= inv_u;
+            y *= inv_u;
+            z *= inv_u;
+        }
+        return *this;
+    }
+
 };
 
 #endif //RAYTRACER_VEC3_H

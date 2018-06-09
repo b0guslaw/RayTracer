@@ -20,7 +20,7 @@ private:
     float transmittance;
     std::string material;
 
-    const epsilon = 0.1; //intersection threshold
+    const float epsilon = 0.1; //intersection threshold
 
 public:
     Sphere(float radius, Vec3f center, RGB_Space rgb, double ka, double kd, double exponent, float reflectance, float transmittance, float refraction, std::string material);

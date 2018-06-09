@@ -19,9 +19,7 @@ Sphere::Sphere(float radius, Vec3f center,
         reflectance{reflectance},
         transmittance{transmittance},
         refraction{refraction},
-        material{material} {
-    std::cout << "Sphere coordinates: " << center << std::endl;
-}
+        material{material} {}
 
 double Sphere::Intersect(Ray ray) {
     Vec3f Sphere_Ray_Vector = center - ray.origin;
@@ -35,10 +33,11 @@ double Sphere::Intersect(Ray ray) {
         Det = sqrt(Det);
     }
 
+    //Solving quadratic solution
     if(B - Det > epsilon){
         return B - Det;
     } else if (B + Det > epsilon) {
-        B + Det;
+        return B + Det;
     }
     return -1;
 }

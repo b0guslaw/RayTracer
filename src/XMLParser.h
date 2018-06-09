@@ -56,21 +56,23 @@ public:
 
     Camera Parse_Camera() {
         Camera cam(
-                camera.child("position").attribute("x").as_double(),
-                camera.child("position").attribute("y").as_double(),
-                camera.child("position").attribute("z").as_double(),
-                camera.child("lookat").attribute("x").as_double(),
-                camera.child("lookat").attribute("y").as_double(),
-                camera.child("lookat").attribute("z").as_double(),
-                camera.child("up").attribute("x").as_double(),
-                camera.child("up").attribute("y").as_double(),
-                camera.child("up").attribute("z").as_double(),
-                camera.child("horizontal_fov").attribute("fov").as_int(),
+                Vec3f(camera.child("position").attribute("x").as_float(),
+                      camera.child("position").attribute("y").as_float(),
+                      camera.child("position").attribute("z").as_float()),
+
+                Vec3f( camera.child("lookat").attribute("x").as_float(),
+                       camera.child("lookat").attribute("y").as_float(),
+                       camera.child("lookat").attribute("z").as_float()),
+
+                Vec3f(camera.child("up").attribute("x").as_float(),
+                      camera.child("up").attribute("y").as_float(),
+                      camera.child("up").attribute("z").as_float()),
+
+                camera.child("horizontal_fov").attribute("angle").as_int(),
                 camera.child("resolution").attribute("horizontal").as_int(),
                 camera.child("resolution").attribute("vertical").as_int(),
                 camera.child("max_bounces").attribute("n").as_int()
                 );
-
         return cam;
     }
 
