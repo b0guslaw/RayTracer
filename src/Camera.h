@@ -14,7 +14,6 @@ private:
     Vec3f lookAt;
     Vec3f up;
     int fov;
-    int res_horizontal, res_vertical;
     int n; //max bounces
 
     float widthHalf = width / 2;
@@ -22,6 +21,7 @@ private:
     float wRes_x = width / res_horizontal;
     float hRes_y = height/ res_vertical;
 public:
+    int res_horizontal, res_vertical;
     Vec3f X_Viewing, Y_Viewing, Z_Viewing;
     float width, height;
     Ray constructRay(const int &u, const int &v);
