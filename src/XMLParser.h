@@ -9,7 +9,7 @@
 
 #include "Background.h"
 #include "Camera.h"
-#include "RGB_Space.h"
+#include "Color.h"
 #include "Sphere.h"
 #include "Light.h"
 #include "Vec3.h"
@@ -46,9 +46,9 @@ public:
     }
 
     Background Parse_Background() {
-            RGB_Space rgb(background.attribute("r").as_double(),
-                    background.attribute("g").as_double(),
-                    background.attribute("b").as_double());
+            Vec3f rgb(background.attribute("r").as_float(),
+                    background.attribute("g").as_float(),
+                    background.attribute("b").as_float());
 
             Background back(rgb);
             return back;
@@ -83,9 +83,9 @@ public:
 
         if(ambient_child) {
 
-            RGB_Space rgb(ambient_child.first_child().attribute("r").as_double(),
-                    ambient_child.first_child().attribute("g").as_double(),
-                    ambient_child.first_child().attribute("b").as_double());
+            Vec3f rgb(ambient_child.first_child().attribute("r").as_float(),
+                    ambient_child.first_child().attribute("g").as_float(),
+                    ambient_child.first_child().attribute("b").as_float());
 
             Light light(Light_Type::ambient, rgb);
             return light;
@@ -110,7 +110,7 @@ public:
             subchild = subchild.next_sibling();
             material = subchild.name();
             subchild = subchild.first_child();
-            RGB_Space rgb(
+            Vec3f rgb(
                     subchild.attribute("r").as_float(),
                     subchild.attribute("g").as_float(),
                     subchild.attribute("b").as_float()
@@ -125,8 +125,6 @@ public:
             t = subchild.attribute("transmittance").as_float();
             subchild = subchild.next_sibling();
             iof = subchild.attribute("refraction").as_float();
-
-
 
             Sphere sphere(radius, Vec3f(x,y,z), rgb, ka, kd, exponent, r, t, iof, material);
             surface_list.push_back(sphere);

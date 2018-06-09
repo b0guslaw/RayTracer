@@ -2,19 +2,13 @@
 #define RAYTRACER_BACKGROUND_H
 
 #include <iostream>
-#include "RGB_Space.h"
+#include "Color.h"
 
-class Background {
+struct Background {
 private:
-    RGB_Space color;
+    Color color;
 public:
-    Background(RGB_Space _color);
-
-    void print_Values(){
-        std::cout << "r=" << color.r
-                  << "\ng=" << color.g
-                  << "\nr=" << color.b << "\n\n";
-     }
+    Background(Color _color) : color{_color} {};
 };
 
 

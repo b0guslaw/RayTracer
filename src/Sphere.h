@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "RGB_Space.h"
+#include "Color.h"
 #include "Ray.h"
 #include "Vec3.h"
 
@@ -13,7 +13,7 @@ class Sphere {
 private:
     Vec3f center;
     float radius;
-    RGB_Space rgb;
+    Color rgb;
     double ka, kd, ks, exponent;
     float reflectance;
     float refraction;
@@ -23,7 +23,7 @@ private:
     const float epsilon = 0.1; //intersection threshold
 
 public:
-    Sphere(float radius, Vec3f center, RGB_Space rgb, double ka, double kd, double exponent, float reflectance, float transmittance, float refraction, std::string material);
+    Sphere(float radius, Vec3f center, Color rgb, double ka, double kd, double exponent, float reflectance, float transmittance, float refraction, std::string material);
     double Intersect(Ray ray);
 };
 

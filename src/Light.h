@@ -1,7 +1,7 @@
 #ifndef RAYTRACER_LIGHT_H
 #define RAYTRACER_LIGHT_H
 
-#include "RGB_Space.h"
+#include "Color.h"
 
 enum class Light_Type {
     ambient, parallel, point
@@ -9,9 +9,9 @@ enum class Light_Type {
 
 struct Light {
     Light_Type type;
-    RGB_Space rgb;
+    Color rgb;
 
-    Light(Light_Type type, RGB_Space rgb) : type{type}, rgb{rgb}{};
+    Light(Light_Type type, Color rgb) : type{type}, rgb{rgb}{};
 };
 
 #endif //RAYTRACER_LIGHT_H

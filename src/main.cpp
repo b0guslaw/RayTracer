@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
 
     for(int j = 0; j < camera.res_vertical; j++) {
         for(int i = 0; i < camera.res_horizontal; i++) {
-
+            Ray ray = camera.constructRay(i,j);
         }
     }
 
@@ -65,3 +65,4 @@ void read_ppm(std::string title){
         std::cout << line << "\n";
     }
 }
+

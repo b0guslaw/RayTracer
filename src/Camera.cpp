@@ -1,6 +1,5 @@
 #include "Camera.h"
 
-
 Camera::Camera(Vec3f position, Vec3f lookAt, Vec3f up,
                int fov, int res_horizontal, int res_vertical, int n)  :
                 position{position}, lookAt{lookAt} , up{up}, fov{fov},
@@ -18,8 +17,8 @@ Camera::Camera(Vec3f position, Vec3f lookAt, Vec3f up,
 }
 
 Ray Camera::constructRay(const int &u,const int &v) {
-    float x = wRes_x * (u + 0.5) - widthHalf;
-    float y = -1*(hRes_y) * (v + 0.5) + heightHalf;
+    auto x = static_cast<float>(wRes_x * (u + 0.5) - widthHalf);
+    auto y = static_cast<float>(-1 * (hRes_y) * (v + 0.5) + heightHalf);
     float z = -1;
     Ray ray;
     ray.origin = Vec3f(0);

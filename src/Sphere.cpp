@@ -8,7 +8,7 @@
 #include "../lib/glm/geometric.hpp"
 
 Sphere::Sphere(float radius, Vec3f center,
-               RGB_Space rgb, double ka, double kd, double exponent,
+               Color rgb, double ka, double kd, double exponent,
                float reflectance, float transmittance, float refraction, std::string material) :
         radius{radius},
         center{center},
@@ -19,7 +19,9 @@ Sphere::Sphere(float radius, Vec3f center,
         reflectance{reflectance},
         transmittance{transmittance},
         refraction{refraction},
-        material{material} {}
+        material{material} {
+    std::cout << "rgb = " << rgb.rgb << "\n";
+}
 
 double Sphere::Intersect(Ray ray) {
     Vec3f Sphere_Ray_Vector = center - ray.origin;
