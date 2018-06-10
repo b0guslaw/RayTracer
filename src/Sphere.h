@@ -12,6 +12,10 @@ typedef Vec3<float> Vec3f;
 class Sphere {
 private:
     Vec3f center;
+public:
+    const Vec3f &getCenter() const;
+
+private:
     float radius;
     Color rgb;
     double ka, kd, ks, exponent;

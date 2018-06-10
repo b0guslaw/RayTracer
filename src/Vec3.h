@@ -31,9 +31,10 @@ public:
         return Vec3(x + v.x, y + v.y, z + v.z);
     }
 
-    Vec3<T> operator+=(const Vec3<T> &v) const {
-        Vec3(x += v.x, y += v.y, z += v.z);
-        return *this;
+    void operator+=(const Vec3<T> &v)  {
+        x+=v.getX();
+        y+=v.getY();
+        z+=v.getZ();
     }
 
     //Vector subtraction
@@ -41,9 +42,10 @@ public:
         return Vec3(x - v.x, y - v.y, z - v.z);
     }
 
-    Vec3<T> operator-=(const Vec3<T> &v) const {
-        Vec3(x -= v.x, y -= v.y, z -= v.z);
-        return *this;
+    void operator-=(const Vec3<T> &v) const {
+        x-=v.x;
+        y-=v.y;
+        z-=v.z;
     }
 
     //Vector length

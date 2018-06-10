@@ -10,10 +10,11 @@ enum class Light_Type {
 struct Light {
     Light_Type type;
     Color rgb;
+    Vec3f pos;
 
     Light() {};
-    Light(Light_Type type, Color rgb) : type{type}, rgb{rgb}{};
-    Light(const Light& l) : type{l.type} , rgb{l.rgb} {};
+    Light(Light_Type type, Color rgb, Vec3f pos) : type{type}, rgb{rgb}, pos{pos}{};
+    Light(const Light& l) : type{l.type} , rgb{l.rgb}, pos{l.pos} {};
 };
 
 #endif //RAYTRACER_LIGHT_H

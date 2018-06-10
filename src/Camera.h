@@ -14,7 +14,7 @@ private:
     Vec3f position; //position of camera
     Vec3f lookAt;
     Vec3f up;
-    int fov;
+    double fov;
     int n; //max bounces
 
     float widthHalf;
@@ -30,7 +30,7 @@ public:
     Camera(Vec3f position,
            Vec3f lookAt,
            Vec3f up,
-           int fov,
+           double fov,
            int res_horizontal, int res_vertical,
            int n);
 

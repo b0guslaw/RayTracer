@@ -8,6 +8,10 @@ typedef Vec3<float> Vec3f;
 struct Color {
     Vec3f rgb;
 
+    const Vec3f &getRgb() const {
+        return rgb;
+    }
+
     Color() {
         rgb;
     }

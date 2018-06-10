@@ -3,7 +3,7 @@
 Camera::Camera() {}
 
 Camera::Camera(Vec3f position, Vec3f lookAt, Vec3f up,
-               int fov, int res_horizontal, int res_vertical, int n)  :
+               double fov, int res_horizontal, int res_vertical, int n)  :
                 position{position}, lookAt{lookAt} , up{up}, fov{fov},
                 res_horizontal{res_horizontal}, res_vertical{res_vertical}, n{n}{
 
@@ -13,8 +13,8 @@ Camera::Camera(Vec3f position, Vec3f lookAt, Vec3f up,
     Vec3f Cross_Up_Z = up.cross(Z_Viewing);
     X_Viewing = Cross_Up_Z.Unit();
 
-    width = static_cast<float>(tan(0.5));
-    height = static_cast<float>(tan((0.5)*res_vertical/res_horizontal));
+    width = static_cast<float>(tan(fov/2));
+    height = static_cast<float>(tan((fov/2)*res_vertical/res_horizontal));
 
     wRes_x = width / res_horizontal;
     hRes_y = height/ res_vertical;

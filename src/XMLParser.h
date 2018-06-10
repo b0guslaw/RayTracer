@@ -76,20 +76,36 @@ public:
         return cam;
     }
 
-    Light Parse_Light() {
+    std::vector<Light> Parse_Light() {
+        std::vector<Light> light_list;
         pugi::xml_node ambient_child = lights.child("ambient_light");
         pugi::xml_node parallel_child = lights.child("parallel_light");
         pugi::xml_node point_child = lights.child("point_light");
 
         if(ambient_child) {
-
             Vec3f rgb(ambient_child.first_child().attribute("r").as_float(),
                     ambient_child.first_child().attribute("g").as_float(),
                     ambient_child.first_child().attribute("b").as_float());
 
-            Light light(Light_Type::ambient, rgb);
-            return light;
+            Light a_light(Light_Type::ambient, rgb, Vec3f{0});
+            light_list.push_back(a_light);
         }
+
+        if(parallel_child) {
+            Vec3f rgb(parallel_child.first_child().attribute("r").as_float(),
+                      parallel_child.first_child().attribute("g").as_float(),
+                      parallel_child.first_child().attribute("b").as_float());
+
+            Vec3f pos(parallel_child.first_child().next_sibling().attribute("x").as_float(),
+                      parallel_child.first_child().next_sibling().attribute("y").as_float(),
+                      parallel_child.first_child().next_sibling().attribute("z").as_float()
+            );
+
+            Light p_light(Light_Type::parallel, rgb, pos);
+            light_list.push_back(p_light);
+
+        }
+        return light_list;
     }
 
     std::vector<Sphere> Parse_Surface() {

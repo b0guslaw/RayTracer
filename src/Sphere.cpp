@@ -50,3 +50,7 @@ Color Sphere::getColor() {
     return rgb;
 }
 
+const Vec3f &Sphere::getCenter() const {
+    return center;
+}
+
