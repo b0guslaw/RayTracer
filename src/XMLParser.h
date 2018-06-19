@@ -16,6 +16,9 @@
 
 typedef Vec3<float> Vec3f;
 
+/**
+ * Main XML Parsing class
+ */
 class XMLParser {
 private:
     pugi::xml_document doc;
@@ -28,11 +31,8 @@ private:
 public:
 
     XMLParser(const char* path){
-
             if(!doc.load_file(path)){
                     std::cout << "Could not load file!\n";
-            } else {
-
             }
             scene = doc.child("scene");
             background = scene.child("background_color");
@@ -76,6 +76,7 @@ public:
         return cam;
     }
 
+    //TODO point light parsing
     std::vector<Light> Parse_Light() {
         std::vector<Light> light_list;
         pugi::xml_node ambient_child = lights.child("ambient_light");
@@ -110,7 +111,6 @@ public:
 
     std::vector<Sphere> Parse_Surface() {
         std::vector<Sphere> surface_list;
-
         for(pugi::xml_node child = surfaces.first_child(); child; child = child.next_sibling()) {
             float radius = child.attribute("radius").as_float();
             float x, y, z;
@@ -145,7 +145,6 @@ public:
             Sphere sphere(radius, Vec3f(x,y,z), rgb, ka, kd, exponent, r, t, iof, material);
             surface_list.push_back(sphere);
         }
-
         return surface_list;
     }
 };

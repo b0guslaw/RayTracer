@@ -23,20 +23,14 @@ Camera::Camera(Vec3f position, Vec3f lookAt, Vec3f up,
 }
 
 Ray Camera::constructRay(const int &u, const int &v) {
-    float u_w = static_cast<float>(u)/res_vertical;
-    float v_w = static_cast<float>(v)/res_horizontal;
     auto x = static_cast<float>(wRes_x * (u + 0.5) - widthHalf);
     auto y = static_cast<float>(-1 * (hRes_y) * (v + 0.5) + heightHalf);
 
-
-
     float z = -1;
     Ray ray;
-    ray.origin = position;
+    ray.origin = position;  //ray origin resides at camera position
     Vec3f pixel{x,y,z};
-    //Vec3f hard{0,0,-1};
     ray.direction = pixel.Unit();
-    //std::cout << pixel << " <=> " << ray.direction << std::endl;
     return ray;
 }
 

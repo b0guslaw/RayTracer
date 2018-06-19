@@ -9,6 +9,10 @@
 
 typedef Vec3<float> Vec3f;
 
+/**
+ * In this class hold all our important values for our camera, and also provide a
+ * fucntion for constructing eye rays
+ */
 class Camera {
 private:
     Vec3f position; //position of camera

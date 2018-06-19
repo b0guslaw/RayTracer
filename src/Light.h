@@ -10,7 +10,7 @@ enum class Light_Type {
 struct Light {
     Light_Type type;
     Color rgb;
-    Vec3f pos;
+    Vec3f pos; //for Ambient light we are keeping the position at (0,0,0) 
 
     Light() {};
     Light(Light_Type type, Color rgb, Vec3f pos) : type{type}, rgb{rgb}, pos{pos}{};

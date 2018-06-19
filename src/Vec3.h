@@ -5,6 +5,9 @@
 #include <ostream>
 #include "../lib/glm/vec3.hpp"
 
+/**
+ * This header only template class is used for vector calculations.
+ */
 template<typename T>
 class Vec3 {
 private:
@@ -43,9 +46,9 @@ public:
     }
 
     void operator-=(const Vec3<T> &v) const {
-        x-=v.x;
-        y-=v.y;
-        z-=v.z;
+        x-=v.getX();
+        y-=v.getY();
+        z-=v.getZ();
     }
 
     //Vector length
