@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="no" ?>
 <!DOCTYPE scene SYSTEM "scene.dtd">
 
-<scene output_file="example2.ppm">
+<scene output_file="example3.png">
 	<background_color r="0.0" g="0.0" b="0.0"/>
 	<camera>
 		<position x="0.0" y="0.0" z="1.0"/>
@@ -51,5 +51,14 @@
 				<refraction iof="2.3"/>
 			</material_solid>
 		</sphere>
+		<mesh name="open_room.obj">
+			<material_solid>
+				<color r="0.5" g="0.5" b="0.5"/>
+				<phong ka="0.3" kd="0.9" ks="1.0" exponent="20"/>
+				<reflectance r="0.0"/>
+				<transmittance t="0.0"/>
+				<refraction iof="0.0"/>
+			</material_solid>
+		</mesh>
 	</surfaces>
 </scene>
