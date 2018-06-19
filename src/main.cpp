@@ -4,7 +4,6 @@
 #include <algorithm>
 
 #include "pugixml.hpp"      //library imports
-#include "../lib/glm/glm.hpp"
 
 #include "Background.h"
 #include "Camera.h"
@@ -27,7 +26,8 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    XMLParser parser(argv[1]);
+    //XMLParser parser(argv[1]);
+    XMLParser parser("../res/example2.xml");
     std::string title = parser.Parse_OutputFile();
 
     background = parser.Parse_Background();
@@ -107,7 +107,6 @@ void write_ppm(std::string title, int width, int height){
         int b = (image[j].rgb.getZ() >= 1.0 ? 255 : (image[j].rgb.getZ() <= 0.0 ? 0 : (int)floor(image[j].rgb.getZ() * 256.0)));
 
         out << r << " " << g << " " << b <<" ";
-
     }
 
     out << "\n";

@@ -3,7 +3,6 @@
 
 #include <cmath>
 #include <ostream>
-#include "../lib/glm/vec3.hpp"
 
 /**
  * This header only template class is used for vector calculations.
@@ -72,11 +71,6 @@ public:
                 z * v.x - x * v.z,
                 x * v.y - y * v.x
                 );
-    }
-
-    //May need this for Lab4b
-    glm::vec3 Vec3_To_glm(const Vec3<T> &v) {
-        return glm::vec3( v.x, v.y, v.z);
     }
 
     friend std::ostream &operator<<(std::ostream &os, const Vec3<T> &v)

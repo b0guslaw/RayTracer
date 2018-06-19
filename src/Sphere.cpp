@@ -5,7 +5,6 @@
 #include <iostream>
 #include "Sphere.h"
 #include "Ray.h"
-#include "../lib/glm/geometric.hpp"
 
 Sphere::Sphere(float radius, Vec3f center,
                Color rgb, double ka, double kd, double exponent,
