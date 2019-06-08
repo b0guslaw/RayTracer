@@ -23,4 +23,8 @@ parallel light: wrong direction;
 phong illumination wrong: specular highlights are tinted with object's color
 
 Task list (completed tasks are marked)
-
+[x] Output a valid black image file (you will get many of them when continuing and this will be the only time you need them).
+[x] Be able to read in the xml file of the specification.
+[x] Output an image with spheres on it after ray tracing them.
+[x] Be able to read in geomtery from the specified xml files. (example1.xml)
+[-] Implement basic Phong illumination and shading. (example2.xml)
