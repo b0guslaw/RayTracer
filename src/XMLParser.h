@@ -42,7 +42,9 @@ public:
     }
 
     std::string Parse_OutputFile(){
-        return scene.attribute("output_file").value();
+        std::string file_name = scene.attribute("output_file").value();
+        file_name = file_name.substr(0, file_name.find(".",0));
+        return file_name + ".ppm";
     }
 
     Background Parse_Background() {
