@@ -53,7 +53,6 @@ public:
     //Vector length
     T len() const {
         return sqrt( (x * x + y * y + z * z) );
-
     }
 
     Vec3<T> operator-() const {
@@ -73,8 +72,7 @@ public:
                 );
     }
 
-    friend std::ostream &operator<<(std::ostream &os, const Vec3<T> &v)
-    {
+    friend std::ostream &operator<<(std::ostream &os, const Vec3<T> &v) {
         os << "[" << v.x << " " << v.y << " " << v.z << "]";
         return os;
     }
@@ -95,8 +93,6 @@ public:
     T getZ() const {
         return z;
     }
-
-
 };
 
 #endif //RAYTRACER_VEC3_H

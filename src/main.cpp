@@ -21,11 +21,12 @@ std::vector<Light> lights;
 
 
 int main(int argc, char** argv) {
-    if(argc < 1){
-        std::cout << "Please specify where your scene.xml is located\n";
+    if(argc < 2){
+        std::cout << "ERROR: Please specify where your scene.xml is located\n";
         return -1;
     }
 
+    std::cout << "Loading resources\n";
     //XMLParser parser(argv[1]);
     XMLParser parser("../res/example2.xml");
     std::string title = parser.Parse_OutputFile();
@@ -35,6 +36,9 @@ int main(int argc, char** argv) {
 
     std::vector<Sphere> sphere_list = parser.Parse_Surface();
     lights = parser.Parse_Light();
+
+    std::cout << "Generating image\n";
+
 
     for(int j = 0; j < camera.res_vertical; j++) {
         for(int i = 0; i < camera.res_horizontal; i++) {
@@ -56,7 +60,7 @@ int main(int argc, char** argv) {
                         case Light_Type::parallel:
                             TotalLightFactor += Vec3f(std::max(WorldToSphereVector.dot(light.pos.Unit()),0.f)) * light.rgb.getRgb();
                             Vec3f ReflectionVector = ray.direction - Vec3f(2. * ray.direction.dot(WorldToSphereVector)) * WorldToSphereVector;
-                            TotalLightFactor += Vec3f(std::pow(std::max(ReflectionVector.dot(light.pos.Unit()),0.f),100.)) * light.rgb.getRgb();
+                            TotalLightFactor += Vec3f(std::pow(std::max(ReflectionVector.dot(light.pos.Unit()),0.f),1000.)) * light.rgb.getRgb();
                             break;
 
                     }
@@ -69,6 +73,7 @@ int main(int argc, char** argv) {
     }
 
     write_ppm(title, camera.res_vertical, camera.res_horizontal);
+    std::cout << "Done\n";
     return 0;
 }
 
