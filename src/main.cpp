@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
 
     std::cout << "Loading resources\n";
     //XMLParser parser(argv[1]);
-    XMLParser parser("../res/example2.xml");
+    XMLParser parser("../res/example1.xml");
     std::string title = parser.Parse_OutputFile();
 
     background = parser.Parse_Background();
@@ -118,6 +118,7 @@ void write_ppm(std::string title, int width, int height){
     out.close();
 }
 
+//Debug function
 void read_ppm(std::string title){
     std::ifstream in;
     std::string line;
