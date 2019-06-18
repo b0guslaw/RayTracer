@@ -10,9 +10,10 @@
 template<typename T>
 class Vec3 {
 private:
-    T x, y, z;
+
 
 public:
+    T x, y, z;
     Vec3() : x{T(0)}, y{T(0)}, z{T(0)} {} //no parameter constructor
     Vec3(T t) : x{t}, y{t}, z{t} {}       //single parameter constructor
     Vec3(T x, T y, T z) : x{x}, y{y}, z{z} {} //multiple parameter constructor
