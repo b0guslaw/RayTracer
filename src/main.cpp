@@ -8,6 +8,7 @@
 #include "Background.h"
 #include "Camera.h"
 #include "XMLParser.h"
+#include "../lib/OBJ_Loader.h"
 
 Color trace(Ray ray, std::vector<Sphere>&, double&, int &);
 void write_ppm(std::string, int, int);
@@ -25,6 +26,13 @@ int main(int argc, char** argv) {
         std::cout << "ERROR: Please specify where your scene.xml is located\n";
         return -1;
     }
+
+    objl::Loader loader;
+    loader.LoadFile("../res/plane_small.obj");
+    for(auto k : loader.LoadedVertices) {
+        std::cout << k.Position.X << " " << k.Position.Y << " " << k.Position.Z << "\n";
+    }
+
 
     std::cout << "Loading resources\n";
     //XMLParser parser(argv[1]);
@@ -60,7 +68,7 @@ int main(int argc, char** argv) {
                         case Light_Type::parallel:
                             TotalLightFactor += Vec3f(std::max(WorldToSphereVector.dot(light.pos.Unit()),0.f)) * light.rgb.getRgb();
                             Vec3f ReflectionVector = ray.direction - Vec3f(2. * ray.direction.dot(WorldToSphereVector)) * WorldToSphereVector;
-                            TotalLightFactor += Vec3f(std::pow(std::max(ReflectionVector.dot(light.pos.Unit()),0.f),1000.)) * light.rgb.getRgb();
+                            TotalLightFactor += Vec3f(std::pow(std::max(ReflectionVector.dot(light.pos.Unit()),0.f),100.)) * light.rgb.getRgb();
                             break;
 
                     }
