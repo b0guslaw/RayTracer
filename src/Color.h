@@ -17,6 +17,12 @@ struct Color {
     }
     Color(const Vec3f &rgb) : rgb(rgb)/*rgb(Vec3f(rgb.getZ(), rgb.getY(), rgb.getX()))*/ {
     }
+
+
+    inline Color operator+=(const Color& other) {
+        this->rgb += other.rgb;
+        return Color(this->rgb + other.rgb);
+    }
 };
 
 #endif //RAYTRACER_RGB_H

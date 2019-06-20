@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <algorithm>
+#include <random>
 
 #include "pugixml.hpp"      //library imports
 
@@ -13,6 +14,7 @@
 Color trace(Ray ray, std::vector<Sphere>&, double&, int &);
 void write_ppm(std::string, int, int);
 void read_ppm(std::string); //For debugging purposes
+std::string print_progress(int);
 
 Background background;
 Camera camera;
@@ -20,9 +22,10 @@ Light light;
 std::vector<Color> image;
 std::vector<Light> lights;
 
+const bool RELEASE = false;
 
 int main(int argc, char** argv) {
-    if(argc < 2){
+    if(argc < 2 && RELEASE){
         std::cout << "ERROR: Please specify where your scene.xml is located\n";
         return -1;
     }
@@ -30,13 +33,12 @@ int main(int argc, char** argv) {
     objl::Loader loader;
     loader.LoadFile("../res/plane_small.obj");
     for(auto k : loader.LoadedVertices) {
-        std::cout << k.Position.X << " " << k.Position.Y << " " << k.Position.Z << "\n";
+        //std::cout << k.Position.X << " " << k.Position.Y << " " << k.Position.Z << "\n";
     }
-
 
     std::cout << "Loading resources\n";
     //XMLParser parser(argv[1]);
-    XMLParser parser("../res/example1.xml");
+    XMLParser parser("../res/example2.xml");
     std::string title = parser.Parse_OutputFile();
 
     background = parser.Parse_Background();
@@ -47,9 +49,51 @@ int main(int argc, char** argv) {
 
     std::cout << "Generating image\n";
 
+    int supersample = 50;
+    std::random_device rd;
+    std::mt19937_64 rng(rd());
+    std::uniform_real_distribution<> dis(0,1);
 
     for(int j = 0; j < camera.res_vertical; j++) {
+        std::cout << print_progress((double)j/camera.res_vertical * 10);
         for(int i = 0; i < camera.res_horizontal; i++) {
+            Color avg = Vec3<float> (0,0,0);
+            Color color;
+            for(int s = 0; s < supersample; s++) {
+                Ray ray = camera.constructRay(i,j);
+                double traversal;
+                int hit;
+                color = trace(ray, sphere_list, traversal, hit);
+
+                if(hit >= 0) {
+                    Vec3f WorldPosition = ray.origin + ray.direction * Vec3f(traversal);
+                    Vec3f WorldToSphereVector = (WorldPosition - sphere_list[hit].getCenter()).Unit();
+                    Vec3f TotalLightFactor = Vec3f(0.);
+
+                    for(auto &light : lights) {
+                        switch(light.type) {
+                            case Light_Type::ambient:
+                                TotalLightFactor += light.rgb.getRgb();
+                                break;
+                            case Light_Type::parallel:
+                                TotalLightFactor += Vec3f(std::max(WorldToSphereVector.dot(light.pos.Unit()),0.f)) * light.rgb.getRgb();
+                                Vec3f ReflectionVector = ray.direction - Vec3f(2. * ray.direction.dot(WorldToSphereVector)) * WorldToSphereVector;
+                                TotalLightFactor += Vec3f(std::pow(std::max(ReflectionVector.dot(light.pos.Unit()),0.f),100.)) * light.rgb.getRgb();
+                                break;
+
+                        }
+                    }
+
+                    avg += (Color(color.rgb * TotalLightFactor));
+                    //image.push_back(color.rgb * TotalLightFactor);
+                } else {
+                    //image.push_back(color);
+                    avg += color;
+                }
+            }
+            avg.rgb = avg.rgb / supersample;
+            image.push_back(avg);
+            /*
             Ray ray = camera.constructRay(i,j);
             double traversal;
             int hit;
@@ -74,9 +118,11 @@ int main(int argc, char** argv) {
                     }
                 }
                 image.push_back(Color(color.rgb * TotalLightFactor));
+
             }
             else
             image.push_back(color);
+             */
         }
     }
 
@@ -135,5 +181,15 @@ void read_ppm(std::string title){
     while(std::getline(in, line)){
         std::cout << line << "\n";
     }
+}
+
+std::string print_progress(int prog) {
+    std::string s = "\r[";
+    for(int i = 0; i != 10; i++) {
+        if(i <= prog) s+= "#";
+        if(i > prog) s+= "-";
+    }
+    s += "]";
+    return s;
 }
 

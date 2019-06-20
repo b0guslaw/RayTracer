@@ -12,11 +12,11 @@ Camera::Camera(Vec3f position, Vec3f lookAt, Vec3f up,
     //X_Viewing = up.cross(Z_Viewing).Unit();
     //Y_Viewing = Z_Viewing.cross(X_Viewing).Unit();
 
-    float rad = static_cast<float>(fov);
-    rad = rad * (180.0f / static_cast<float>(M_PI));
+    auto fov_rad = static_cast<float>(fov);
+    fov_rad = fov_rad * (180.0f / static_cast<float>(M_PI));
 
-    width = static_cast<float>(tan(rad));
-    height = static_cast<float>(tan(rad)*res_vertical/res_horizontal);
+    width = static_cast<float>(tan(fov_rad));
+    height = static_cast<float>(tan(fov_rad)*res_vertical/res_horizontal);
 
     wRes_x = width / res_horizontal;
     hRes_y = height/ res_vertical;
@@ -28,7 +28,7 @@ Ray Camera::constructRay(const int &u, const int &v) {
     auto x = static_cast<float>(wRes_x * (u + 0.5) - widthHalf);
     auto y = static_cast<float>(-1 * (hRes_y) * (v + 0.5) + heightHalf);
 
-    float z = -1;
+    float z = -1.0;
     Ray ray;
     ray.origin = position;  //ray origin resides at camera position
     Vec3f pixel{x,y,z};

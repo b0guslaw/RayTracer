@@ -24,6 +24,11 @@ public:
         return Vec3<T>( x * s, y * s, z * s);
     }
 
+    //Scalar Division
+    Vec3<T> operator/(const T &s) const {
+        return Vec3<T>( x / s, y / s, z / s);
+    }
+
     //Vector multiplication
     Vec3<T> operator*(const Vec3<T> &v) const {
         return Vec3<T>(x * v.x, y * v.y, z * v.z);
