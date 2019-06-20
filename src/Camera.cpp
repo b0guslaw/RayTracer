@@ -24,7 +24,7 @@ Camera::Camera(Vec3f position, Vec3f lookAt, Vec3f up,
     heightHalf = height / 2;
 }
 
-Ray Camera::constructRay(const int &u, const int &v) {
+Ray Camera::constructRay(const double &u, const double &v) {
     auto x = static_cast<float>(wRes_x * (u + 0.5) - widthHalf);
     auto y = static_cast<float>(-1 * (hRes_y) * (v + 0.5) + heightHalf);
 

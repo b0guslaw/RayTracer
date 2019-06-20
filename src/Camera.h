@@ -29,7 +29,7 @@ public:
     int res_horizontal, res_vertical;
     Vec3f X_Viewing, Y_Viewing, Z_Viewing;
     float width, height;
-    Ray constructRay(const int &u, const int &v);
+    Ray constructRay(const double &u, const double &v);
     Camera();
     Camera(Vec3f position,
            Vec3f lookAt,

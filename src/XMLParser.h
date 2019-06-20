@@ -27,6 +27,7 @@ private:
     pugi::xml_node camera;
     pugi::xml_node lights;
     pugi::xml_node surfaces;
+    bool success = false;
 
 public:
 
@@ -39,6 +40,7 @@ public:
             camera = scene.child("camera");
             lights = scene.child("lights");
             surfaces = scene.child("surfaces");
+            success = true;
     }
 
     std::string Parse_OutputFile(){
@@ -149,6 +151,8 @@ public:
         }
         return surface_list;
     }
+
+    bool file_loaded() { return success; }
 };
 
 #endif //RAYTRACER_XMLPARSER_H

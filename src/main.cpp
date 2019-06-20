@@ -22,12 +22,24 @@ Light light;
 std::vector<Color> image;
 std::vector<Light> lights;
 
-const bool RELEASE = false;
+const bool RELEASE = true;
 
 int main(int argc, char** argv) {
+    int supersample = 20;
+    int ss_rate = 1;
     if(argc < 2 && RELEASE){
         std::cout << "ERROR: Please specify where your scene.xml is located\n";
         return -1;
+    }
+
+    for(int i = 0; i < argc; i++) {
+        if(std::strcmp(argv[i],"--supersample-high") == 0) {
+            supersample *= 5;
+        }
+        if(std::strcmp(argv[i],"--supersample-off") == 0) {
+            supersample = 1;
+            ss_rate = 0;
+        }
     }
 
     objl::Loader loader;
@@ -36,23 +48,31 @@ int main(int argc, char** argv) {
         //std::cout << k.Position.X << " " << k.Position.Y << " " << k.Position.Z << "\n";
     }
 
+
     std::cout << "Loading resources\n";
-    //XMLParser parser(argv[1]);
-    XMLParser parser("../res/example2.xml");
-    std::string title = parser.Parse_OutputFile();
-
-    background = parser.Parse_Background();
-    camera = parser.Parse_Camera();
-
-    std::vector<Sphere> sphere_list = parser.Parse_Surface();
-    lights = parser.Parse_Light();
+    std::vector<Sphere> sphere_list;
+    std::string title;
+    if(RELEASE) {
+        XMLParser parser(argv[1]);
+        if(!parser.file_loaded()) return -2;
+        title = parser.Parse_OutputFile();
+        background = parser.Parse_Background();
+        camera = parser.Parse_Camera();
+        sphere_list = parser.Parse_Surface();
+        lights = parser.Parse_Light();
+    } else {
+        XMLParser parser("../res/example2.xml");
+        title = parser.Parse_OutputFile();
+        background = parser.Parse_Background();
+        camera = parser.Parse_Camera();
+        sphere_list = parser.Parse_Surface();
+        lights = parser.Parse_Light();
+    }
 
     std::cout << "Generating image\n";
-
-    int supersample = 50;
     std::random_device rd;
     std::mt19937_64 rng(rd());
-    std::uniform_real_distribution<> dis(0,1);
+    std::uniform_real_distribution<> dis(0,ss_rate);
 
     for(int j = 0; j < camera.res_vertical; j++) {
         std::cout << print_progress((double)j/camera.res_vertical * 10);
@@ -60,7 +80,7 @@ int main(int argc, char** argv) {
             Color avg = Vec3<float> (0,0,0);
             Color color;
             for(int s = 0; s < supersample; s++) {
-                Ray ray = camera.constructRay(i,j);
+                Ray ray = camera.constructRay(i + dis(rng), j + dis(rng));
                 double traversal;
                 int hit;
                 color = trace(ray, sphere_list, traversal, hit);
