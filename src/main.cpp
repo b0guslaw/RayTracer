@@ -14,7 +14,7 @@
 #include "Object.h"
 
 Color trace(Ray ray, std::vector<Sphere>&, double&, int &);
-void write_ppm(std::string, int, int);
+void write_ppm(const std::string&, int, int);
 void read_ppm(std::string); //For debugging purposes
 std::string print_progress(int);
 
@@ -24,11 +24,12 @@ Light light;
 std::vector<Color> image;
 std::vector<Light> lights;
 
-const bool RELEASE = false;
+const bool RELEASE = true;
 
 int main(int argc, char** argv) {
     int supersample = 20;
     int ss_rate = 1;
+    bool pretty = false;
     if(argc < 2 && RELEASE){
         std::cout << "ERROR: Please specify where your scene.xml is located\n";
         return -1;
@@ -42,9 +43,12 @@ int main(int argc, char** argv) {
             supersample = 1;
             ss_rate = 0;
         }
+        if(std::strcmp(argv[i],"--obj-print") == 0) {
+            pretty = true;
+        }
     }
 
-    std::cout << "Loading resources\n";
+    std::cout << "Loading resources...\n";
     std::vector<Sphere> sphere_list;
     std::vector<Object> mesh_list;
     std::string title;
@@ -56,6 +60,7 @@ int main(int argc, char** argv) {
         camera = parser.Parse_Camera();
         sphere_list = parser.Parse_Surface();
         lights = parser.Parse_Light();
+        mesh_list = parser.Parse_Mesh();
     } else {
         XMLParser parser("../res/example3.xml");
         title = parser.Parse_OutputFile();
@@ -66,8 +71,8 @@ int main(int argc, char** argv) {
         mesh_list = parser.Parse_Mesh();
     }
 
-    for(auto o : mesh_list) {
-        o.pretty_print();
+    if(pretty) {
+        for(auto m : mesh_list) m.pretty_print();
     }
 
     std::cout << "Generating image\n";
@@ -112,36 +117,6 @@ int main(int argc, char** argv) {
             }
             avg.rgb = avg.rgb / supersample;
             image.push_back(avg);
-            /*
-            Ray ray = camera.constructRay(i,j);
-            double traversal;
-            int hit;
-            Color color = trace(ray, sphere_list, traversal, hit);
-
-            if(hit >= 0) {
-                Vec3f WorldPosition = ray.origin + ray.direction * Vec3f(traversal);
-                Vec3f WorldToSphereVector = (WorldPosition - sphere_list[hit].getCenter()).Unit();
-                Vec3f TotalLightFactor = Vec3f(0.);
-
-                for(auto &light : lights) {
-                    switch(light.type) {
-                        case Light_Type::ambient:
-                            TotalLightFactor += light.rgb.getRgb();
-                            break;
-                        case Light_Type::parallel:
-                            TotalLightFactor += Vec3f(std::max(WorldToSphereVector.dot(light.pos.Unit()),0.f)) * light.rgb.getRgb();
-                            Vec3f ReflectionVector = ray.direction - Vec3f(2. * ray.direction.dot(WorldToSphereVector)) * WorldToSphereVector;
-                            TotalLightFactor += Vec3f(std::pow(std::max(ReflectionVector.dot(light.pos.Unit()),0.f),100.)) * light.rgb.getRgb();
-                            break;
-
-                    }
-                }
-                image.push_back(Color(color.rgb * TotalLightFactor));
-
-            }
-            else
-            image.push_back(color);
-             */
         }
     }
 
@@ -165,7 +140,7 @@ Color trace(Ray ray, std::vector<Sphere> &objectList, double &traversal, int &hi
     return traversal > 0. ? objectList[obj].getColor() : background.color;
 }
 
-void write_ppm(std::string title, int width, int height){
+void write_ppm(const std::string& title, int width, int height){
     std::ofstream out;
     out.open(title);
 
@@ -178,7 +153,6 @@ void write_ppm(std::string title, int width, int height){
         if(j % width == 0) {
             out << "\n";
         }
-
         //https://stackoverflow.com/questions/1914115/converting-color-value-from-float-0-1-to-byte-0-255
         int r = (image[j].rgb.getX() >= 1.0 ? 255 : (image[j].rgb.getX() <= 0.0 ? 0 : (int)floor(image[j].rgb.getX() * 256.0)));
         int g = (image[j].rgb.getY() >= 1.0 ? 255 : (image[j].rgb.getY() <= 0.0 ? 0 : (int)floor(image[j].rgb.getY() * 256.0)));

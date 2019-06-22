@@ -14,10 +14,10 @@ public:
     Object() = delete;
     Object(std::vector<std::array<double,3>>);
     void pretty_print();
-    double intersect(Ray,int);
+    double intersect(Ray);
     float ka, kd, ks, exponent;
     float reflectance, transmittance, iof;
-    Vec3f color;
+    Vec3f color, normal;
 };
 
 

@@ -15,12 +15,13 @@ void Object::pretty_print() {
     for(auto face : vert) {
         std::cout << face << "\n";
     }
+    std::cout << "Normal: " << normal << "\n";
     std::cout << "Color values:\n" << color;
     std::cout << "\nPhong values:\nka: " << ka << "\nkd: " << kd << "\nks: " << ks << "\nexp: " << exponent;
     std::cout << "\nReflectance: " << reflectance << "\nTransmittance " << transmittance;
     std::cout << "\nRefraction: " << iof << "\n";
 }
 
-double Object::intersect(Ray, int idx) {
+double Object::intersect(Ray) {
 
 }

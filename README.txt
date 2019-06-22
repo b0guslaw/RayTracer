@@ -11,6 +11,10 @@ setting. It is possible to adjust the amount of rays per pixel by providing an a
 --supersample-high will send 100 rays per pixel
 --supersample-off turns the effect off
 
+.obj Loading:
+Since I was not able to get around to Field Test my Triangle intersection test, I included a parameter that prints the
+contents of each mesh in a pretty format, mostly for debugging purposes, but also to show that my object loading works
+--obj-print enables this feature, by default it is off.
 
 
 New in this release are error codes:
@@ -50,4 +54,4 @@ FOV not calculated appropriately, which means the image is slightly cut off
 
 Completed Tasks:
 Supersampling
-
+Object Loading and Parsing into custom data structure

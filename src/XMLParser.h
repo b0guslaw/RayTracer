@@ -29,13 +29,14 @@ private:
     pugi::xml_node camera;
     pugi::xml_node lights;
     pugi::xml_node surfaces;
-    bool success = false;
+    bool success;
 
 public:
 
     XMLParser(const char* path){
             if(!doc.load_file(path)){
                     std::cout << "Could not load file!\n";
+                    success = false;
             }
             scene = doc.child("scene");
             background = scene.child("background_color");
@@ -183,6 +184,7 @@ public:
                 o.transmittance = subchild.attribute("t").as_float();
                 subchild = subchild.next_sibling();
                 o.iof = subchild.attribute("iof").as_float();
+                o.normal = Vec3f(mesh.Vertices[i].Normal.X,mesh.Vertices[i].Normal.Y,mesh.Vertices[i].Normal.Z);
                 mesh_list.push_back(o);
             }
 
