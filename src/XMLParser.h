@@ -13,6 +13,8 @@
 #include "Sphere.h"
 #include "Light.h"
 #include "Vec3.h"
+#include "Object.h"
+#include "../lib/OBJ_Loader.h"
 
 typedef Vec3<float> Vec3f;
 
@@ -150,6 +152,42 @@ public:
             surface_list.push_back(sphere);
         }
         return surface_list;
+    }
+
+    std::vector<Object> Parse_Mesh() {
+        std::vector<Object> mesh_list;
+        objl::Loader loader;
+
+        for(pugi::xml_node child = surfaces.first_child(); child; child = child.next_sibling()) {
+            std::string path = child.attribute("name").as_string();
+            loader.LoadFile("../res/"+path);
+            std::vector<std::array<double,3>> data;
+            for(int i = 0; i < loader.LoadedMeshes.size(); i++) {
+                objl::Mesh mesh = loader.LoadedMeshes[i];
+                for(int j = 0; j < mesh.Vertices.size(); j++) {
+                    std::array<double,3> t{mesh.Vertices[j].Position.X,mesh.Vertices[j].Position.Y,mesh.Vertices[j].Position.Z};
+                    data.push_back(t);
+                }
+                Object o(data);
+                pugi::xml_node subchild = child.first_child();
+                subchild = subchild.first_child();
+                o.color = Vec3f(subchild.attribute("r").as_float(),subchild.attribute("g").as_float(),subchild.attribute("b").as_float());
+                subchild = subchild.next_sibling();
+                o.ka = subchild.attribute("ka").as_double();
+                o.kd = subchild.attribute("kd").as_double();
+                o.ks = subchild.attribute("ks").as_double();
+                o.exponent = subchild.attribute("exponent").as_double();
+                subchild = subchild.next_sibling();
+                o.reflectance = subchild.attribute("r").as_float();
+                subchild = subchild.next_sibling();
+                o.transmittance = subchild.attribute("t").as_float();
+                subchild = subchild.next_sibling();
+                o.iof = subchild.attribute("iof").as_float();
+                mesh_list.push_back(o);
+            }
+
+        }
+        return mesh_list;
     }
 
     bool file_loaded() { return success; }

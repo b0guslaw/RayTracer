@@ -50,3 +50,8 @@ const Vec3f &Sphere::getCenter() const {
     return center;
 }
 
+void Sphere::set_time(float t0, float t1) {
+    time0 = t0;
+    time1 = t1;
+}
+

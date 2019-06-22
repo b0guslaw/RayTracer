@@ -36,6 +36,11 @@ Ray Camera::constructRay(const double &u, const double &v) {
     return ray;
 }
 
+void Camera::set_time(float t0, float t1) {
+    time0 = t0;
+    time1 = t1;
+}
+
 
 
 

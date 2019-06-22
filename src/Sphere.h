@@ -18,11 +18,14 @@ public:
 private:
     float radius;
     Color rgb;
-    double ka, kd, ks, exponent;
+    double ka, kd, exponent;
     float reflectance;
     float refraction;
     float transmittance;
     std::string material;
+
+    float time0, time1;
+    Vec3f center0, center1;
 
     const float epsilon = 0.1; //intersection threshold, hardcoded
 
@@ -30,6 +33,7 @@ public:
     Sphere(float radius, Vec3f center, Color rgb, double ka, double kd, double exponent, float reflectance, float transmittance, float refraction, std::string material);
     double Intersect(Ray ray);
     Color getColor();
+    void set_time(float, float);
 };
 
 

@@ -25,6 +25,7 @@ private:
     float heightHalf;
     float wRes_x;
     float hRes_y;
+    float time0, time1;
 public:
     int res_horizontal, res_vertical;
     Vec3f X_Viewing, Y_Viewing, Z_Viewing;
@@ -37,7 +38,7 @@ public:
            double fov,
            int res_horizontal, int res_vertical,
            int n);
-
+    void set_time(float,float);
 };
 
 

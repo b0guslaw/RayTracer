@@ -3,6 +3,7 @@
 #include <fstream>
 #include <algorithm>
 #include <random>
+#include <array>
 
 #include "pugixml.hpp"      //library imports
 
@@ -10,6 +11,7 @@
 #include "Camera.h"
 #include "XMLParser.h"
 #include "../lib/OBJ_Loader.h"
+#include "Object.h"
 
 Color trace(Ray ray, std::vector<Sphere>&, double&, int &);
 void write_ppm(std::string, int, int);
@@ -22,7 +24,7 @@ Light light;
 std::vector<Color> image;
 std::vector<Light> lights;
 
-const bool RELEASE = true;
+const bool RELEASE = false;
 
 int main(int argc, char** argv) {
     int supersample = 20;
@@ -42,15 +44,9 @@ int main(int argc, char** argv) {
         }
     }
 
-    objl::Loader loader;
-    loader.LoadFile("../res/plane_small.obj");
-    for(auto k : loader.LoadedVertices) {
-        //std::cout << k.Position.X << " " << k.Position.Y << " " << k.Position.Z << "\n";
-    }
-
-
     std::cout << "Loading resources\n";
     std::vector<Sphere> sphere_list;
+    std::vector<Object> mesh_list;
     std::string title;
     if(RELEASE) {
         XMLParser parser(argv[1]);
@@ -61,12 +57,17 @@ int main(int argc, char** argv) {
         sphere_list = parser.Parse_Surface();
         lights = parser.Parse_Light();
     } else {
-        XMLParser parser("../res/example2.xml");
+        XMLParser parser("../res/example3.xml");
         title = parser.Parse_OutputFile();
         background = parser.Parse_Background();
         camera = parser.Parse_Camera();
         sphere_list = parser.Parse_Surface();
         lights = parser.Parse_Light();
+        mesh_list = parser.Parse_Mesh();
+    }
+
+    for(auto o : mesh_list) {
+        o.pretty_print();
     }
 
     std::cout << "Generating image\n";
@@ -105,9 +106,7 @@ int main(int argc, char** argv) {
                     }
 
                     avg += (Color(color.rgb * TotalLightFactor));
-                    //image.push_back(color.rgb * TotalLightFactor);
                 } else {
-                    //image.push_back(color);
                     avg += color;
                 }
             }
