@@ -3,6 +3,9 @@
 
 #include "Color.h"
 
+/**
+ * This class holds the rgb values of the background
+ */
 struct Background {
     Color color;
     Background() { color = Vec3f(0); }

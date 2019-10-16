@@ -8,6 +8,7 @@ typedef Vec3<float> Vec3f;
 struct Ray {
     Vec3f origin;
     Vec3f direction;
+    float time;
 };
 
 #endif //RAYTRACER_RAY_H

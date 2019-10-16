@@ -1,0 +1,1 @@
+g++ src/main.cpp src/pugixml.hpp lib/pugixml.cpp src/Camera.cpp src/Camera.h src/Background.h src/XMLParser.h src/Color.h src/Sphere.cpp src/Sphere.h src/Light.h src/Ray.h src/Vec3.h -o ray -std=c++11

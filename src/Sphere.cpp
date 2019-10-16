@@ -5,7 +5,6 @@
 #include <iostream>
 #include "Sphere.h"
 #include "Ray.h"
-#include "../lib/glm/geometric.hpp"
 
 Sphere::Sphere(float radius, Vec3f center,
                Color rgb, double ka, double kd, double exponent,
@@ -28,7 +27,6 @@ double Sphere::Intersect(Ray ray) {
 
     //Discriminant of quadratic solution
     double Det = B * B - Sphere_Ray_Vector.dot(Sphere_Ray_Vector) + (radius * radius);
-   // std::cout << B * B - Sphere_Ray_Vector.dot(Sphere_Ray_Vector) + (radius * radius) << std::endl;
     if(Det < .0) {
         return -1; //No point will be hit
     } else {
@@ -37,10 +35,8 @@ double Sphere::Intersect(Ray ray) {
 
     //Solving quadratic solution
     if(B - Det > epsilon){
-        //std::cout << "intersection\n";
         return B - Det;
     } else if (B + Det > epsilon) {
-        //std::cout << "intersection\n";
         return B + Det;
     }
     return -1;
@@ -52,5 +48,10 @@ Color Sphere::getColor() {
 
 const Vec3f &Sphere::getCenter() const {
     return center;
+}
+
+void Sphere::set_time(float t0, float t1) {
+    time0 = t0;
+    time1 = t1;
 }
 

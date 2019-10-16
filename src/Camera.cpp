@@ -4,17 +4,19 @@ Camera::Camera() {}
 
 Camera::Camera(Vec3f position, Vec3f lookAt, Vec3f up,
                double fov, int res_horizontal, int res_vertical, int n)  :
-                position{position}, lookAt{lookAt} , up{up}, fov{fov},
+                position{position}, lookAt{lookAt} , up{up}, fov{fov}, //0.785398
                 res_horizontal{res_horizontal}, res_vertical{res_vertical}, n{n}{
 
     Vec3f LookAt_Position = position - lookAt;
-    Z_Viewing = LookAt_Position.Unit();
-    Y_Viewing = up.Unit();
-    Vec3f Cross_Up_Z = up.cross(Z_Viewing);
-    X_Viewing = Cross_Up_Z.Unit();
+    //Z_Viewing = LookAt_Position.Unit();
+    //X_Viewing = up.cross(Z_Viewing).Unit();
+    //Y_Viewing = Z_Viewing.cross(X_Viewing).Unit();
 
-    width = static_cast<float>(tan(fov/2));
-    height = static_cast<float>(tan((fov/2)*res_vertical/res_horizontal));
+    auto fov_rad = static_cast<float>(fov);
+    fov_rad = fov_rad * (180.0f / static_cast<float>(M_PI));
+
+    width = static_cast<float>(tan(fov_rad));
+    height = static_cast<float>(tan(fov_rad)*res_vertical/res_horizontal);
 
     wRes_x = width / res_horizontal;
     hRes_y = height/ res_vertical;
@@ -22,22 +24,21 @@ Camera::Camera(Vec3f position, Vec3f lookAt, Vec3f up,
     heightHalf = height / 2;
 }
 
-Ray Camera::constructRay(const int &u, const int &v) {
-    float u_w = static_cast<float>(u)/res_vertical;
-    float v_w = static_cast<float>(v)/res_horizontal;
+Ray Camera::constructRay(const double &u, const double &v) {
     auto x = static_cast<float>(wRes_x * (u + 0.5) - widthHalf);
     auto y = static_cast<float>(-1 * (hRes_y) * (v + 0.5) + heightHalf);
 
-
-
-    float z = -1;
+    float z = -1.0;
     Ray ray;
-    ray.origin = position;
+    ray.origin = position;  //ray origin resides at camera position
     Vec3f pixel{x,y,z};
-    //Vec3f hard{0,0,-1};
     ray.direction = pixel.Unit();
-    //std::cout << pixel << " <=> " << ray.direction << std::endl;
     return ray;
+}
+
+void Camera::set_time(float t0, float t1) {
+    time0 = t0;
+    time1 = t1;
 }
 
 
